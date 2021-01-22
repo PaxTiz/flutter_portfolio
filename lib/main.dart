@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:portfolio/screens/works_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/about_screen.dart';
 import 'screens/resume_screen.dart';
@@ -63,7 +64,7 @@ class _Application extends State<Application> {
       HomeScreen(key: homeKey, onPressed: goToAbout),
       AboutScreen(key: aboutKey),
       SkillsScreen(key: skillsKey),
-      HomeScreen(key: worksKey, onPressed: goToAbout),
+      WorksScreen(key: worksKey),
       ResumeScreen(key: resumeKey),
       HomeScreen(key: contactKey, onPressed: goToAbout),
     ];
