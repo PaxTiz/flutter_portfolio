@@ -8,15 +8,19 @@ class AppBarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          primary: Color.fromRGBO(17, 17, 17, 1),
+          shadowColor: Color.fromRGBO(50, 50, 50, 1)),
       onPressed: onPressed,
-      child: Text(
-        text,
-        style:
-            styles["defaultText"].copyWith(color: Colors.white, fontSize: 14),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Text(
+          text,
+          style:
+              styles["defaultText"].copyWith(color: Colors.white, fontSize: 14),
+        ),
       ),
-      color: Color.fromRGBO(17, 17, 17, 1),
-      splashColor: Color.fromRGBO(50, 50, 50, 1),
     );
   }
 }
