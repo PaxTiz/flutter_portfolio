@@ -9,7 +9,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return Container(
+      height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
           image: DecorationImage(
               image: NetworkImage(
@@ -17,8 +18,7 @@ class HomeScreen extends StatelessWidget {
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(.8), BlendMode.darken),
               fit: BoxFit.cover)),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 256),
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
