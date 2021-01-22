@@ -62,6 +62,24 @@ class SkillsScreen extends StatelessWidget {
     {
       "icon": "https://img.icons8.com/color/452/firebase.png",
       "title": "Firebase"
+    },
+    {
+      "icon":
+          "https://media.vlpt.us/images/everytime79/post/6045fcd4-b446-45f9-a8ba-73425cd0e201/xcode.png",
+      "title": "XCode",
+    },
+    {
+      "icon": "https://assets.stickpng.com/images/5847f981cef1014c0b5e48be.png",
+      "title": "Git",
+    },
+    {
+      "icon":
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Adobe_XD_CC_icon.svg/1200px-Adobe_XD_CC_icon.svg.png",
+      "title": "Adobe XD",
+    },
+    {
+      "icon": "https://miro.medium.com/max/670/0*UTBrDcrJ6SbePBzR",
+      "title": "Figma",
     }
   ];
 
@@ -69,40 +87,49 @@ class SkillsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(64),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          H2("Mes compétences"),
-          SizedBox(
-            height: 32,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(233, 233, 233, 1),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(64),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              H2("Mes compétences"),
+              SizedBox(
+                height: 32,
+              ),
+              GridView.count(
+                crossAxisCount: 4,
+                shrinkWrap: true,
+                childAspectRatio: 3,
+                physics: NeverScrollableScrollPhysics(),
+                children: sks
+                    .map((e) => Row(
+                          children: [
+                            Image.network(
+                              e['icon'],
+                              width: 80,
+                              height: 80,
+                            ),
+                            SizedBox(
+                              width: 32,
+                            ),
+                            Text(
+                              e['title'],
+                              style: styles["defaultText"].copyWith(
+                                  fontWeight: FontWeight.bold, fontSize: 24),
+                            )
+                          ],
+                        ))
+                    .toList(),
+              ),
+            ],
           ),
-          GridView.count(
-            crossAxisCount: 3,
-            shrinkWrap: true,
-            childAspectRatio: 3,
-            physics: NeverScrollableScrollPhysics(),
-            children: sks
-                .map((e) => Row(
-                      children: [
-                        Image.network(
-                          e['icon'],
-                          width: 80,
-                          height: 80,
-                        ),
-                        SizedBox(
-                          width: 32,
-                        ),
-                        Text(
-                          e['title'],
-                          style: styles["defaultText"].copyWith(
-                              fontWeight: FontWeight.bold, fontSize: 24),
-                        )
-                      ],
-                    ))
-                .toList(),
-          ),
-        ],
+        ),
       ),
     );
   }
