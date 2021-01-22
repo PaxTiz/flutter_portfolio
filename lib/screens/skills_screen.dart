@@ -52,7 +52,7 @@ class SkillsScreen extends StatelessWidget {
     },
     {
       "icon": "https://www.jetbrains.com/company/brand/img/jetbrains_logo.png",
-      "title": "Outils Jetbrains"
+      "title": "Jetbrains"
     },
     {
       "icon":
@@ -69,7 +69,7 @@ class SkillsScreen extends StatelessWidget {
       "title": "XCode",
     },
     {
-      "icon": "https://assets.stickpng.com/images/5847f981cef1014c0b5e48be.png",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png",
       "title": "Git",
     },
     {
@@ -105,7 +105,7 @@ class SkillsScreen extends StatelessWidget {
               GridView.count(
                 crossAxisCount: 4,
                 shrinkWrap: true,
-                childAspectRatio: 3,
+                childAspectRatio: 2.5,
                 physics: NeverScrollableScrollPhysics(),
                 children: sks
                     .map((e) => Row(
