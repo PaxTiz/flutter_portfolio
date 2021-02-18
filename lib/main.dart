@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:portfolio/screens/works_screen.dart';
-import 'screens/home_screen.dart';
-import 'screens/about_screen.dart';
-import 'screens/resume_screen.dart';
-import 'screens/skills_screen.dart';
-import 'components/app_bar_button.dart';
 import 'dart:js' as js;
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'screens/about_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/resume_screen.dart';
+import 'screens/skills_screen.dart';
+import 'screens/works_screen.dart';
+import 'styles.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        primaryColor: Colors.black,
         primarySwatch: Colors.blue,
       ),
       home: Application(),
@@ -31,21 +33,9 @@ class Application extends StatefulWidget {
   createState() => _Application();
 }
 
-class _Application extends State<Application> {
+class _Application extends State<Application> with SingleTickerProviderStateMixin {
   List screens;
-  final homeKey = GlobalKey();
-  final aboutKey = GlobalKey();
-  final skillsKey = GlobalKey();
-  final worksKey = GlobalKey();
-  final resumeKey = GlobalKey();
-  final contactKey = GlobalKey();
-
-  void goToHome() => Scrollable.ensureVisible(homeKey.currentContext);
-  void goToAbout() => Scrollable.ensureVisible(aboutKey.currentContext);
-  void goToSkills() => Scrollable.ensureVisible(skillsKey.currentContext);
-  void goToWorks() => Scrollable.ensureVisible(worksKey.currentContext);
-  void goToResume() => Scrollable.ensureVisible(resumeKey.currentContext);
-  void goToContact() => Scrollable.ensureVisible(contactKey.currentContext);
+  TabController controller;
 
   void _showSnackBar(BuildContext context) {
     final snack = SnackBar(
@@ -61,40 +51,63 @@ class _Application extends State<Application> {
   @override
   void initState() {
     screens = <Widget>[
-      HomeScreen(key: homeKey, onPressed: goToAbout),
-      AboutScreen(key: aboutKey),
-      SkillsScreen(key: skillsKey),
-      WorksScreen(key: worksKey),
-      ResumeScreen(key: resumeKey),
-      HomeScreen(key: contactKey, onPressed: goToAbout),
+      HomeScreen(onPressed: () {
+        setState(() {
+          controller.animateTo(1,
+              duration: Duration(milliseconds: 500), curve: Curves.elasticInOut);
+        });
+      }),
+      AboutScreen(),
+      SkillsScreen(),
+      WorksScreen(),
+      ResumeScreen(),
+      HomeScreen(onPressed: () {
+        setState(() {
+          controller.animateTo(1);
+        });
+      })
     ];
+    controller = TabController(vsync: this, length: screens.length);
     super.initState();
   }
 
+  // Color.fromRGBO(17, 17, 17, 1)
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showSnackBar(context),
-        child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
-      ),
-      appBar: AppBar(
-        title: Text("Valentin Cernuta"),
-        centerTitle: false,
-        backgroundColor: Color.fromRGBO(17, 17, 17, 1),
-        actions: [
-          AppBarButton(onPressed: goToHome, text: "Accueil"),
-          AppBarButton(onPressed: goToAbout, text: "A propos"),
-          AppBarButton(onPressed: goToSkills, text: "Compétences"),
-          AppBarButton(onPressed: goToWorks, text: "Projets"),
-          AppBarButton(onPressed: goToResume, text: "CV"),
-          AppBarButton(onPressed: goToContact, text: "Contact"),
-        ],
-      ),
-      body: ListView(
-        shrinkWrap: true,
-        children: screens,
+    final size = Size(MediaQuery.of(context).size.width, 50);
+    return DefaultTabController(
+      length: screens.length,
+      initialIndex: 0,
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _showSnackBar(context),
+          child: Icon(Icons.add),
+          backgroundColor: Colors.blue,
+        ),
+        appBar: PreferredSize(
+          preferredSize: size,
+          child: DecoratedBox(
+            decoration: BoxDecoration(color: Color.fromRGBO(17, 17, 17, 1)),
+            child: TabBar(
+              overlayColor: MaterialStateProperty.all(Color.fromRGBO(17, 17, 17, .5)),
+              labelStyle: styles["defaultText"].copyWith(fontSize: 15, fontWeight: FontWeight.bold),
+              physics: BouncingScrollPhysics(),
+              controller: controller,
+              tabs: [
+                Tab(text: "Accueil"),
+                Tab(text: "A propos"),
+                Tab(text: "Compétences"),
+                Tab(text: "Projets"),
+                Tab(text: "CV"),
+                Tab(text: "Contact"),
+              ],
+            ),
+          ),
+        ),
+        body: TabBarView(
+          controller: controller,
+          children: screens,
+        ),
       ),
     );
   }

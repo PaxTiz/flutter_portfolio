@@ -13,10 +13,8 @@ class HomeScreen extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: NetworkImage(
-                  "https://4kwallpapers.com/images/wallpapers/macos-big-sur-apple-layers-fluidic-colorful-wwdc-stock-2020-3840x2160-1455.jpg"),
-              colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(.8), BlendMode.darken),
+              image: AssetImage("assets/images/home.jpg"),
+              colorFilter: ColorFilter.mode(Colors.black.withOpacity(.8), BlendMode.darken),
               fit: BoxFit.cover)),
       child: Center(
         child: Column(
@@ -33,9 +31,8 @@ class HomeScreen extends StatelessWidget {
                 TextSpan(text: "\n"),
                 TextSpan(
                   text:
-                      "Je suis développeur informatique et je viens de Françe 🇫🇷 !",
-                  style:
-                      styles["h3"].copyWith(color: Colors.white, fontSize: 24),
+                      "Bienvenue sur mon portfolio, vous pourrez y découvrir qui je suis ainsi que mes compétences !",
+                  style: styles["h3"].copyWith(color: Colors.white, fontSize: 24),
                 )
               ]),
             ),
