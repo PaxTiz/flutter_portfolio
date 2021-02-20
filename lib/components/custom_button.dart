@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/icons.dart';
 
 import '../styles.dart';
 
@@ -20,10 +21,17 @@ class CustomButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(32)),
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 16, horizontal: 64),
-            child: Text(
-              text.toLowerCase(),
-              style: styles["defaultText"]
-                  .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  text.toLowerCase(),
+                  style: styles["defaultText"]
+                      .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: 16),
+                Icon(RemixIcons.chevron_right, size: 36, color: Colors.white)
+              ],
             ),
           ),
         ));

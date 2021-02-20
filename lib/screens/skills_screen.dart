@@ -42,9 +42,9 @@ class SkillsScreen extends StatelessWidget {
                   height: 32,
                 ),
                 GridView.count(
-                  crossAxisCount: 3,
+                  crossAxisCount: MediaQuery.of(context).size.width > 1100 ? 3 : 2,
                   shrinkWrap: true,
-                  childAspectRatio: 2.5,
+                  childAspectRatio: MediaQuery.of(context).size.width > 1100 ? 2.5 : 1.5,
                   physics: NeverScrollableScrollPhysics(),
                   children: sks
                       .map((e) => Row(

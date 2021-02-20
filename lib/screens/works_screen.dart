@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:portfolio/components/custom_button.dart';
 import 'package:portfolio/styles.dart';
 
@@ -15,7 +16,6 @@ class WorksScreen extends StatelessWidget {
       "description":
           "En tant que projet du semestre 2 de DUT Informatique, nous avions dû réaliser un jeu en groupe de 2. Celui-ci s'inspire du Bomberman originel. Les technologies utiliséee sont Java et JavaFX. Il y a un menu principal, un menu de pause, un menu de mort ainsi que le jeu en lui-même, et il est même possible de recommencer une partie.",
       "image": "game.png",
-      "github": "https://github.com/vcernuta/projet-s2-lens",
     },
     {
       "title": "Bomberman",
@@ -36,7 +36,6 @@ class WorksScreen extends StatelessWidget {
       "description":
           "En tant que projet du semestre 2 de DUT Informatique, nous avions dû réaliser un jeu en groupe de 2. Celui-ci s'inspire du Bomberman originel. Les technologies utiliséee sont Java et JavaFX. Il y a un menu principal, un menu de pause, un menu de mort ainsi que le jeu en lui-même, et il est même possible de recommencer une partie.",
       "image": "game.png",
-      "github": "https://github.com/vcernuta/projet-s2-lens",
     },
   ];
 
@@ -48,15 +47,23 @@ class WorksScreen extends StatelessWidget {
       SizedBox(height: 16),
     ];
     if (item.containsKey("github")) {
-      itemContent.add(CustomButton(
+      itemContent.add(
+        CustomButton(
           text: "Lien vers Github",
           onTap: () {
             print(item["github"]);
-          }));
+          },
+        ),
+      );
     }
     return Container(
       width: itemWidth,
-      color: Colors.white,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(color: Colors.black.withOpacity(.2), spreadRadius: 1, blurRadius: 5)
+          ]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -65,8 +72,9 @@ class WorksScreen extends StatelessWidget {
             height: 300,
             child: DecoratedBox(
               decoration: BoxDecoration(
-                backgroundBlendMode: BlendMode.darken,
                 color: Colors.black,
+                backgroundBlendMode: BlendMode.darken,
+                borderRadius: BorderRadius.circular(16),
                 image: DecorationImage(
                     image: AssetImage("assets/images/projects/${item["image"]}"),
                     fit: BoxFit.contain),
@@ -104,10 +112,14 @@ class WorksScreen extends StatelessWidget {
               children: [
                 H2("Mes projets"),
                 SizedBox(height: 32),
-                Wrap(
-                    spacing: 16,
-                    runSpacing: 16,
-                    children: projects.map((e) => this._buildItem(e, gridItem, context)).toList())
+                StaggeredGridView.count(
+                    shrinkWrap: true,
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    children: projects.map((e) => this._buildItem(e, gridItem, context)).toList(),
+                    staggeredTiles: List.generate(projects.length, (i) => StaggeredTile.fit(1)),
+                  )
               ],
             ),
           ),

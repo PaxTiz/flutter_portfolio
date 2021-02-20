@@ -3,6 +3,7 @@ import 'dart:js' as js;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'icons.dart';
 import 'screens/about_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/resume_screen.dart';
@@ -33,9 +34,18 @@ class Application extends StatefulWidget {
   createState() => _Application();
 }
 
-class _Application extends State<Application> with SingleTickerProviderStateMixin {
+class _Application extends State<Application>
+    with SingleTickerProviderStateMixin {
   List screens;
   TabController controller;
+  List<Map> navItems = [
+    {"text": "Accueil", "icon": RemixIcons.home},
+    {"text": "A propos", "icon": RemixIcons.about},
+    {"text": "Compétences", "icon": RemixIcons.skills},
+    {"text": "Projets", "icon": RemixIcons.projects},
+    {"text": "CV", "icon": RemixIcons.resume},
+    {"text": "Contact", "icon": RemixIcons.location}
+  ];
 
   void _showSnackBar(BuildContext context) {
     final snack = SnackBar(
@@ -48,33 +58,119 @@ class _Application extends State<Application> with SingleTickerProviderStateMixi
     ScaffoldMessenger.of(context).showSnackBar(snack);
   }
 
+  void _scrollTo(int i) => controller.animateTo(i,
+      duration: Duration(milliseconds: 500), curve: Curves.elasticInOut);
+
+  Widget _buildResponsiveNavigation(Size size) {
+    if (size.width > 1000) {
+      return PreferredSize(
+        preferredSize: size,
+        child: DecoratedBox(
+          decoration: BoxDecoration(color: Color.fromRGBO(17, 17, 17, 1)),
+          child: TabBar(
+            overlayColor:
+                MaterialStateProperty.all(Color.fromRGBO(17, 17, 17, .5)),
+            labelStyle: styles["defaultText"]
+                .copyWith(fontSize: 15, fontWeight: FontWeight.bold),
+            physics: BouncingScrollPhysics(),
+            controller: controller,
+            tabs: [
+              Tab(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(RemixIcons.home),
+                    SizedBox(width: 16),
+                    Text("Accueil")
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(RemixIcons.about),
+                    SizedBox(width: 16),
+                    Text("A propos")
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(RemixIcons.skills),
+                    SizedBox(width: 16),
+                    Text("Compétences")
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(RemixIcons.projects),
+                    SizedBox(width: 16),
+                    Text("Projets")
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(RemixIcons.resume),
+                    SizedBox(width: 16),
+                    Text("CV")
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(RemixIcons.location),
+                    SizedBox(width: 16),
+                    Text("Contact")
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Drawer(
+      child: ListView(
+        children: navItems.map((e) => ListTile(
+          title: Text(e['text']),
+          leading: Icon(e['icon']),
+          onTap: () => _scrollTo(navItems.indexOf(e)),
+        )).toList(),
+      ),
+    );
+  }
+
   @override
   void initState() {
     screens = <Widget>[
-      HomeScreen(onPressed: () {
-        setState(() {
-          controller.animateTo(1,
-              duration: Duration(milliseconds: 500), curve: Curves.elasticInOut);
-        });
-      }),
+      HomeScreen(onPressed: () => _scrollTo(1)),
       AboutScreen(),
       SkillsScreen(),
       WorksScreen(),
       ResumeScreen(),
-      HomeScreen(onPressed: () {
-        setState(() {
-          controller.animateTo(1);
-        });
-      })
+      HomeScreen(onPressed: () => _scrollTo(1))
     ];
     controller = TabController(vsync: this, length: screens.length);
     super.initState();
   }
 
-  // Color.fromRGBO(17, 17, 17, 1)
   @override
   Widget build(BuildContext context) {
     final size = Size(MediaQuery.of(context).size.width, 50);
+    final navigation = _buildResponsiveNavigation(size);
+
     return DefaultTabController(
       length: screens.length,
       initialIndex: 0,
@@ -84,26 +180,8 @@ class _Application extends State<Application> with SingleTickerProviderStateMixi
           child: Icon(Icons.add),
           backgroundColor: Colors.blue,
         ),
-        appBar: PreferredSize(
-          preferredSize: size,
-          child: DecoratedBox(
-            decoration: BoxDecoration(color: Color.fromRGBO(17, 17, 17, 1)),
-            child: TabBar(
-              overlayColor: MaterialStateProperty.all(Color.fromRGBO(17, 17, 17, .5)),
-              labelStyle: styles["defaultText"].copyWith(fontSize: 15, fontWeight: FontWeight.bold),
-              physics: BouncingScrollPhysics(),
-              controller: controller,
-              tabs: [
-                Tab(text: "Accueil"),
-                Tab(text: "A propos"),
-                Tab(text: "Compétences"),
-                Tab(text: "Projets"),
-                Tab(text: "CV"),
-                Tab(text: "Contact"),
-              ],
-            ),
-          ),
-        ),
+        appBar: navigation is PreferredSize ? navigation : AppBar(),
+        drawer: navigation is Drawer ? navigation : null,
         body: TabBarView(
           controller: controller,
           children: screens,
