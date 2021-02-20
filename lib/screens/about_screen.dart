@@ -3,7 +3,6 @@ import 'package:portfolio/components/headers.dart';
 import 'package:portfolio/styles.dart';
 
 class AboutScreen extends StatelessWidget {
-  const AboutScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

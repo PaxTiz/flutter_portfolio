@@ -6,7 +6,7 @@ import '../styles.dart';
 class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
   final String text;
-  const CustomButton({@required this.text, @required this.onTap});
+  const CustomButton({required this.text, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class CustomButton extends StatelessWidget {
               children: [
                 Text(
                   text.toLowerCase(),
-                  style: styles["defaultText"]
+                  style: styles["defaultText"]!
                       .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(width: 16),

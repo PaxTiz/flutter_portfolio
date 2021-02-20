@@ -36,8 +36,8 @@ class Application extends StatefulWidget {
 
 class _Application extends State<Application>
     with SingleTickerProviderStateMixin {
-  List screens;
-  TabController controller;
+  late List<Widget> screens;
+  late TabController controller;
   List<Map> navItems = [
     {"text": "Accueil", "icon": RemixIcons.home},
     {"text": "A propos", "icon": RemixIcons.about},
@@ -70,7 +70,7 @@ class _Application extends State<Application>
           child: TabBar(
             overlayColor:
                 MaterialStateProperty.all(Color.fromRGBO(17, 17, 17, .5)),
-            labelStyle: styles["defaultText"]
+            labelStyle: styles["defaultText"]!
                 .copyWith(fontSize: 15, fontWeight: FontWeight.bold),
             physics: BouncingScrollPhysics(),
             controller: controller,

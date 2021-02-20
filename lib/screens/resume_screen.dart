@@ -3,7 +3,6 @@ import 'package:portfolio/components/custom_button.dart';
 import 'package:portfolio/components/headers.dart';
 
 class ResumeScreen extends StatelessWidget {
-  const ResumeScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,7 @@ class ResumeScreen extends StatelessWidget {
           SizedBox(
             height: 64,
           ),
-          CustomButton(text: "télécharger en pdf", onTap: null)
+          CustomButton(text: "télécharger en pdf", onTap: () {})
         ],
       ),
     );

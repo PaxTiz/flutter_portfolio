@@ -5,7 +5,7 @@ import 'package:portfolio/styles.dart';
 
 class HomeScreen extends StatelessWidget {
   final VoidCallback onPressed;
-  const HomeScreen({Key key, @required this.onPressed}) : super(key: key);
+  const HomeScreen({required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +26,13 @@ class HomeScreen extends StatelessWidget {
               text: TextSpan(children: [
                 TextSpan(
                   text: "Bonjour, je m'appelle Valentin Cernuta \n",
-                  style: styles["h2"].copyWith(color: Colors.white),
+                  style: styles["h2"]!.copyWith(color: Colors.white),
                 ),
                 TextSpan(text: "\n"),
                 TextSpan(
                   text:
                       "Bienvenue sur mon portfolio, vous pourrez y découvrir qui je suis ainsi que mes compétences !",
-                  style: styles["h3"].copyWith(color: Colors.white, fontSize: 24),
+                  style: styles["h3"]!.copyWith(color: Colors.white, fontSize: 24),
                 )
               ]),
             ),

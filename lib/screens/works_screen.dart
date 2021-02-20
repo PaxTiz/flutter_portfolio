@@ -8,8 +8,6 @@ import 'package:portfolio/styles.dart';
 import '../components/headers.dart';
 
 class WorksScreen extends StatelessWidget {
-  WorksScreen({Key key}) : super(key: key);
-
   final List projects = [
     {
       "title": "Bomberman",

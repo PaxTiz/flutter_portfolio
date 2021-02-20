@@ -3,8 +3,6 @@ import 'package:portfolio/components/headers.dart';
 import 'package:portfolio/styles.dart';
 
 class SkillsScreen extends StatelessWidget {
-  SkillsScreen({Key key}) : super(key: key);
-
   final sks = [
     {"icon": "flutter.png", "title": "Flutter"},
     {"icon": "swift.png", "title": "Swift"},
@@ -58,8 +56,8 @@ class SkillsScreen extends StatelessWidget {
                                 width: 32,
                               ),
                               Text(
-                                e['title'],
-                                style: styles["defaultText"]
+                                e['title']!,
+                                style: styles["defaultText"]!
                                     .copyWith(fontWeight: FontWeight.bold, fontSize: 24),
                               )
                             ],
